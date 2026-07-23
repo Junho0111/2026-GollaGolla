@@ -1,7 +1,7 @@
 package com.gollagolla.member.domain;
 
-import com.gollagolla.member.domain.dto.MemberSearchResponse;
-import com.gollagolla.member.domain.dto.QMemberSearchResponse;
+import com.gollagolla.member.domain.dto.MemberSearchDto;
+import com.gollagolla.member.domain.dto.QMemberSearchDto;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +29,9 @@ public class QMemberRepository {
         return Optional.ofNullable(findMember);
     }
 
-    public List<MemberSearchResponse> searchByNickname(String nickname) {
+    public List<MemberSearchDto> searchByNickname(String nickname) {
         return queryFactory
-                .select(new QMemberSearchResponse(
+                .select(new QMemberSearchDto(
                         member.id,
                         member.nickname,
                         member.email))

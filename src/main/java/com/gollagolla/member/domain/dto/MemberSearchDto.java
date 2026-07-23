@@ -4,17 +4,17 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 @Getter
-public class MemberSearchResponse {
+public class MemberSearchDto {
 
     private Long id;
     private String nickname;
     private String email;
 
-    private MemberSearchResponse() {
+    private MemberSearchDto() {
     }
 
     @QueryProjection
-    public MemberSearchResponse(Long id, String nickname, String email) {
+    public MemberSearchDto(Long id, String nickname, String email) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;

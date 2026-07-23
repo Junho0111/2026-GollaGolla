@@ -1,6 +1,6 @@
 package com.gollagolla.member.domain;
 
-import com.gollagolla.member.domain.dto.MemberSearchResponse;
+import com.gollagolla.member.domain.dto.MemberSearchDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -93,12 +93,12 @@ class QMemberRepositoryTest {
         memberRepository.save(naverMember);
 
         // when
-        List<MemberSearchResponse> findNaverMember = qMemberRepository.searchByNickname("유저");
+        List<MemberSearchDto> findNaverMember = qMemberRepository.searchByNickname("유저");
 
         // then
         assertThat(findNaverMember).hasSize(2);
         assertThat(findNaverMember)
-                .extracting(MemberSearchResponse::getNickname)
+                .extracting(MemberSearchDto::getNickname)
                 .containsExactlyInAnyOrder("카카오유저", "네이버유저");
     }
 }
