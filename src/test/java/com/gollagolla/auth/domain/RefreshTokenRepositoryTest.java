@@ -1,4 +1,4 @@
-package com.gollagolla.member.domain;
+package com.gollagolla.auth.domain;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

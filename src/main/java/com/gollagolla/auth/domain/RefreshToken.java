@@ -1,4 +1,4 @@
-package com.gollagolla.member.domain;
+package com.gollagolla.auth.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
