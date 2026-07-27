@@ -19,6 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import com.gollagolla.global.exception.BusinessException;
+import com.gollagolla.global.exception.ErrorCode;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -33,10 +36,10 @@ public class AuthService {
     @Transactional
     public SignUpResponse signUp(String email, String password, String nickname) {
         if (memberRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+            throw new BusinessException(ErrorCode.DUPLICATE_EMAIL);
         }
         if (memberRepository.existsByNickname(nickname)) {
-            throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
+            throw new BusinessException(ErrorCode.DUPLICATE_NICKNAME);
         }
 
         Member member = Member.builder()
@@ -56,13 +59,13 @@ public class AuthService {
     @Transactional
     public LoginResponse login(String email, String password) {
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_CREDENTIALS));
 
         if (member.getProvider() != Provider.LOCAL) {
-            throw new IllegalStateException("소셜 계정으로 가입된 이메일입니다. OAuth 로그인을 이용해 주세요.");
+            throw new BusinessException(ErrorCode.SOCIAL_LOGIN_REQUIRED);
         }
         if (!passwordEncoder.matches(password, member.getPassword())) {
-            throw new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다.");
+            throw new BusinessException(ErrorCode.INVALID_CREDENTIALS);
         }
 
         refreshTokenRepository.deleteByMemberId(member.getId());
@@ -86,7 +89,7 @@ public class AuthService {
 
         Member member = existingMember.orElseGet(() -> {
             if (userInfo.getEmail() != null && memberRepository.existsByEmail(userInfo.getEmail())) {
-                throw new IllegalStateException("이미 다른 방식으로 가입된 이메일입니다.");
+                throw new BusinessException(ErrorCode.ALREADY_REGISTERED_EMAIL);
             }
 
             return memberRepository.save(Member.builder()

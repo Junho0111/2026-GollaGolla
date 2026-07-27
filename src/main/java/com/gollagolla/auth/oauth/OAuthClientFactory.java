@@ -1,6 +1,8 @@
 package com.gollagolla.auth.oauth;
 
 import com.gollagolla.member.domain.Provider;
+import com.gollagolla.global.exception.BusinessException;
+import com.gollagolla.global.exception.ErrorCode;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,7 +25,7 @@ public class OAuthClientFactory {
     public OAuthClient getClient(Provider provider) {
         OAuthClient client = clients.get(provider);
         if (client == null) {
-            throw new IllegalArgumentException("지원하지 않는 OAuth Provider입니다: " + provider);
+            throw new BusinessException(ErrorCode.UNSUPPORTED_OAUTH_PROVIDER, "지원하지 않는 OAuth Provider입니다: " + provider);
         }
         return client;
     }

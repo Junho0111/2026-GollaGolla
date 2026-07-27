@@ -1,6 +1,8 @@
 package com.gollagolla.auth.support;
 
 import jakarta.servlet.http.HttpServletRequest;
+import com.gollagolla.global.exception.BusinessException;
+import com.gollagolla.global.exception.ErrorCode;
 
 public class AuthorizationExtractor {
 
@@ -15,6 +17,6 @@ public class AuthorizationExtractor {
         if (header != null && header.startsWith(BEARER_PREFIX)) {
             return header.substring(BEARER_PREFIX.length()).trim();
         }
-        throw new IllegalArgumentException("Bearer 토큰이 존재하지 않습니다.");
+        throw new BusinessException(ErrorCode.MISSING_BEARER_TOKEN);
     }
 }

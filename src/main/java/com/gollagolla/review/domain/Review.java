@@ -1,6 +1,8 @@
 package com.gollagolla.review.domain;
 
 import com.gollagolla.global.BaseTimeEntity;
+import com.gollagolla.global.exception.BusinessException;
+import com.gollagolla.global.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,13 +36,17 @@ public class Review extends BaseTimeEntity {
 
     @Builder
     public Review(Long poiId, Long memberId, Integer rating, String content, boolean verified) {
-        if (rating == null || rating < 1 || rating > 5) {
-            throw new IllegalArgumentException("평점은 1~5 사이여야 합니다.");
-        }
+        validateRating(rating);
         this.poiId = poiId;
         this.memberId = memberId;
         this.rating = rating;
         this.content = content;
         this.verified = verified;
+    }
+
+    private void validateRating(int rating) {
+        if (rating < 1 || rating > 5) {
+            throw new BusinessException(ErrorCode.INVALID_RATING_VALUE);
+        }
     }
 }

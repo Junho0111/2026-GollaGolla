@@ -1,5 +1,7 @@
 package com.gollagolla.itinerary.domain;
 
+import com.gollagolla.global.exception.BusinessException;
+import com.gollagolla.global.exception.ErrorCode;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -21,7 +23,7 @@ public class TravelPeriod {
 
     public TravelPeriod(LocalDate startDate, LocalDate endDate) {
         if (startDate.isAfter(endDate)) {
-            throw new IllegalArgumentException("시작일은 종료일보다 빨라야 합니다.");
+            throw new BusinessException(ErrorCode.INVALID_TRAVEL_PERIOD);
         }
         this.startDate = startDate;
         this.endDate = endDate;

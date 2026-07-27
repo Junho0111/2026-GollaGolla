@@ -1,5 +1,7 @@
 package com.gollagolla.poi.domain;
 
+import com.gollagolla.global.exception.BusinessException;
+import com.gollagolla.global.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,10 +28,10 @@ public class Region {
     @Builder
     public Region(Long parentId, String name, Integer depth) {
         if (depth == 1 && parentId != null) {
-            throw new IllegalArgumentException("Depth1 지역은 상위 지역을 가질 수 없습니다.");
+            throw new BusinessException(ErrorCode.INVALID_REGION_HIERARCHY, "Depth1 지역은 상위 지역을 가질 수 없습니다.");
         }
         if (depth == 2 && parentId == null) {
-            throw new IllegalArgumentException("Depth2 지역은 상위 지역이 필요합니다.");
+            throw new BusinessException(ErrorCode.INVALID_REGION_HIERARCHY, "Depth2 지역은 상위 지역이 필요합니다.");
         }
         this.parentId = parentId;
         this.name = name;
