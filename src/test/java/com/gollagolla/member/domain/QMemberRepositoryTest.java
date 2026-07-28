@@ -11,13 +11,14 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
+import com.gollagolla.config.EnableJpaAuditingConfig;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
-@Import({QMemberRepository.class})
+@Import({QMemberRepository.class, EnableJpaAuditingConfig.class})
 @DataJpaTest
 @Transactional
 class QMemberRepositoryTest {
