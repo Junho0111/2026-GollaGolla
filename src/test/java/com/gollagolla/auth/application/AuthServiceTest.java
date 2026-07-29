@@ -253,4 +253,56 @@ class AuthServiceTest {
                 .isInstanceOf(BusinessException.class)
                 .hasMessageContaining("이미 다른 방식으로 가입된 이메일입니다.");
     }
+
+    @Test
+    void 로그아웃_시_해당_회원의_RefreshToken_삭제() throws Exception {
+        // given
+        Long memberId = 1L;
+        willDoNothing().given(refreshTokenRepository).deleteByMemberId(1L);
+
+        // when
+        authService.logout(memberId);
+
+        // then
+        then(refreshTokenRepository).should().deleteByMemberId(memberId);
+    }
+
+    @Test
+    void 회원탈퇴_시_RefreshToken_삭제_후_Member_삭제() throws Exception {
+        // given
+        Long memberId = 1L;
+        Member member = Member.builder()
+                .email("test@test.com")
+                .password("encoded-pw")
+                .nickname("테스터")
+                .provider(Provider.LOCAL)
+                .role(Role.USER)
+                .build();
+
+        given(memberRepository.findById(memberId)).willReturn(Optional.of(member));
+        willDoNothing().given(refreshTokenRepository).deleteByMemberId(memberId);
+        willDoNothing().given(memberRepository).delete(member);
+
+        // when
+        authService.withdraw(memberId);
+
+        // then
+        then(refreshTokenRepository).should().deleteByMemberId(memberId);
+        then(memberRepository).should().delete(member);
+    }
+
+    @Test
+    void 회원탈퇴_시_존재하지_않는_회원이면_예외_발생() throws Exception {
+        // given
+        Long nontMemberId = 1L;
+        given(memberRepository.findById(nontMemberId)).willReturn(Optional.empty());
+
+        // when & then
+        assertThatThrownBy(() -> authService.withdraw(nontMemberId))
+                .isInstanceOf(BusinessException.class)
+                .hasMessageContaining("존재하지 않는 회원입니다.");
+
+        then(refreshTokenRepository).shouldHaveNoInteractions();
+        then(memberRepository).should(never()).delete(any());
+    }
 }
