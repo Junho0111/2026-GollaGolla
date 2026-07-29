@@ -106,6 +106,20 @@ public class AuthService {
         return new OAuthResponse(accessToken, refreshToken, isNewUser);
     }
 
+    @Transactional
+    public void logout(Long memberId) {
+        refreshTokenRepository.deleteByMemberId(memberId);
+    }
+
+    @Transactional
+    public void withdraw(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+
+        refreshTokenRepository.deleteByMemberId(memberId);
+        memberRepository.delete(member);
+    }
+
     private String issueRefreshToken(Long memberId) {
         String rawToken = jwtTokenProvider.generateRefreshToken(memberId);
         LocalDateTime expiresAt = jwtTokenProvider.getRefreshTokenExpiry();

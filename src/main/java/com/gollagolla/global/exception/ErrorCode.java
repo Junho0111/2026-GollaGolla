@@ -15,6 +15,7 @@ public enum ErrorCode {
     MISSING_BEARER_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH_007", "Bearer 토큰이 존재하지 않습니다."),
     EMPTY_OAUTH_PROVIDER(HttpStatus.BAD_REQUEST, "AUTH_008", "OAuth Provider 이름이 비어있습니다."),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH_009", "유효하지 않은 토큰입니다."),
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "AUTH_010", "존재하지 않는 회원입니다."),
 
     INVALID_TRAVEL_PERIOD(HttpStatus.BAD_REQUEST, "DOMAIN_001", "시작일은 종료일보다 빨라야 합니다."),
     INVALID_REGION_HIERARCHY(HttpStatus.BAD_REQUEST, "DOMAIN_002", "지역 계층 설정이 올바르지 않습니다."),

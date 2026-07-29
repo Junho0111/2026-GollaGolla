@@ -5,6 +5,7 @@ import com.gollagolla.auth.ui.dto.*;
 import com.gollagolla.member.domain.Provider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,13 +22,27 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
     public LoginResponse login(@RequestBody LoginRequest request) {
         return authService.login(request.getEmail(), request.getPassword());
     }
 
     @PostMapping("/oauth/{provider}")
+    @ResponseStatus(HttpStatus.OK)
     public OAuthResponse oauthLogin(@PathVariable("provider") String providerName, @RequestBody OAuthRequest request) {
         Provider provider = Provider.from(providerName);
         return authService.oauthLogin(provider, request.getAuthorizationCode());
+    }
+
+    @DeleteMapping("/logout")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logout(@AuthenticationPrincipal Long memberId) {
+        authService.logout(memberId);
+    }
+
+    @DeleteMapping("/withdraw")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void withdraw(@AuthenticationPrincipal Long memberId) {
+        authService.withdraw(memberId);
     }
 }
