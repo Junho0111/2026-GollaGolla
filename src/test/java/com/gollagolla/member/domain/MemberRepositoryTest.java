@@ -1,6 +1,7 @@
 package com.gollagolla.member.domain;
 
 import com.gollagolla.config.EnableJpaAuditingConfig;
+import com.gollagolla.config.QuerydslConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -13,7 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 @Transactional
-@Import(EnableJpaAuditingConfig.class)
+@Import({EnableJpaAuditingConfig.class, QuerydslConfig.class})
 class MemberRepositoryTest {
 
     @Autowired

@@ -1,8 +1,10 @@
 package com.gollagolla.auth.domain;
 
+import com.gollagolla.config.QuerydslConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -12,6 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 @Transactional
+@Import(QuerydslConfig.class)
 class RefreshTokenRepositoryTest {
 
     @Autowired
