@@ -17,6 +17,9 @@ public enum ErrorCode {
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH_009", "유효하지 않은 토큰입니다."),
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "AUTH_010", "존재하지 않는 회원입니다."),
 
+    POI_NOT_FOUND(HttpStatus.NOT_FOUND, "POI_001", "존재하지 않는 장소입니다."),
+    UNSUPPORTED_SEARCH_TYPE(HttpStatus.BAD_REQUEST, "POI_002", "지원하지 않는 검색 타입입니다. 현재 지원: poi"),
+
     INVALID_TRAVEL_PERIOD(HttpStatus.BAD_REQUEST, "DOMAIN_001", "시작일은 종료일보다 빨라야 합니다."),
     INVALID_REGION_HIERARCHY(HttpStatus.BAD_REQUEST, "DOMAIN_002", "지역 계층 설정이 올바르지 않습니다."),
     INVALID_RATING_VALUE(HttpStatus.BAD_REQUEST, "DOMAIN_003", "평점은 1~5 사이여야 합니다."),
