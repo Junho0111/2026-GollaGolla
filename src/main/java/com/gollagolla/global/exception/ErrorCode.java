@@ -20,6 +20,10 @@ public enum ErrorCode {
     POI_NOT_FOUND(HttpStatus.NOT_FOUND, "POI_001", "존재하지 않는 장소입니다."),
     UNSUPPORTED_SEARCH_TYPE(HttpStatus.BAD_REQUEST, "POI_002", "지원하지 않는 검색 타입입니다. 현재 지원: poi"),
 
+    REVIEW_ALREADY_EXISTS(HttpStatus.CONFLICT, "REVIEW_001", "이미 리뷰를 작성한 장소입니다."),
+    REVIEW_INVALID_RATING(HttpStatus.BAD_REQUEST, "REVIEW_002", "평점은 1~5 사이여야 합니다."),
+    REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "REVIEW_003", "존재하지 않는 리뷰입니다."),
+
     INVALID_TRAVEL_PERIOD(HttpStatus.BAD_REQUEST, "DOMAIN_001", "시작일은 종료일보다 빨라야 합니다."),
     INVALID_REGION_HIERARCHY(HttpStatus.BAD_REQUEST, "DOMAIN_002", "지역 계층 설정이 올바르지 않습니다."),
     INVALID_RATING_VALUE(HttpStatus.BAD_REQUEST, "DOMAIN_003", "평점은 1~5 사이여야 합니다."),

@@ -8,10 +8,9 @@ import lombok.*;
 
 @Entity
 @Table(name = "review", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_review_poi_member", columnNames = {"poi_id", "member_id"})
-})
+        @UniqueConstraint(name = "uq_review_poi_member", columnNames = {"poi_id", "member_id"})})
 @Getter
-@ToString(of = {"id", "poiId", "memberId", "rating", "verified"})
+@ToString(of = {"id", "poiId", "memberId", "rating", "content"})
 @EqualsAndHashCode(of = "id", callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends BaseTimeEntity {
@@ -31,22 +30,21 @@ public class Review extends BaseTimeEntity {
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "is_verified", nullable = false)
-    private boolean verified = false;
-
     @Builder
-    public Review(Long poiId, Long memberId, Integer rating, String content, boolean verified) {
+    public Review(Long poiId, Long memberId, Integer rating, String content) {
         validateRating(rating);
         this.poiId = poiId;
         this.memberId = memberId;
         this.rating = rating;
         this.content = content;
-        this.verified = verified;
     }
 
-    private void validateRating(int rating) {
-        if (rating < 1 || rating > 5) {
-            throw new BusinessException(ErrorCode.INVALID_RATING_VALUE);
+    private static void validateRating(Integer rating) {
+        if (rating == null || rating < 1 || rating > 5) {
+            throw new BusinessException(
+                    ErrorCode.REVIEW_INVALID_RATING,
+                    "rating=" + rating + " is out of range [rating < 1 || rating > 5]"
+            );
         }
     }
 }
