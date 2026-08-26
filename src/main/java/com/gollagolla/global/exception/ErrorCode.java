@@ -27,6 +27,11 @@ public enum ErrorCode {
     WISHLIST_ALREADY_EXISTS(HttpStatus.CONFLICT, "WISH_001", "이미 찜한 장소입니다."),
     WISHLIST_NOT_FOUND(HttpStatus.NOT_FOUND, "WISH_002", "찜 내역을 찾을 수 없습니다."),
 
+    ITINERARY_NOT_FOUND(HttpStatus.NOT_FOUND, "ITINERARY_001", "일정을 찾을 수 없습니다."),
+    ITINERARY_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "ITINERARY_002", "일정 항목을 찾을 수 없습니다."),
+    ITINERARY_FORBIDDEN(HttpStatus.FORBIDDEN, "ITINERARY_003", "해당 일정에 접근할 권한이 없습니다."),
+    SHARE_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "ITINERARY_004", "유효하지 않거나 만료된 공유 링크입니다."),
+
     INVALID_TRAVEL_PERIOD(HttpStatus.BAD_REQUEST, "DOMAIN_001", "시작일은 종료일보다 빨라야 합니다."),
     INVALID_REGION_HIERARCHY(HttpStatus.BAD_REQUEST, "DOMAIN_002", "지역 계층 설정이 올바르지 않습니다."),
     INVALID_RATING_VALUE(HttpStatus.BAD_REQUEST, "DOMAIN_003", "평점은 1~5 사이여야 합니다."),
