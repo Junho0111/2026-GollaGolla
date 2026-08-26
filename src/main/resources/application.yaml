@@ -30,3 +30,6 @@ jwt:
   secret: gollagolla-secret-key-must-be-at-least-32-characters-long
   access-token-expiry-ms: 3600000      # 1시간
   refresh-token-expiry-ms: 604800000   # 7일
+
+app:
+  share-base-url: https://gollagolla.app/s/
