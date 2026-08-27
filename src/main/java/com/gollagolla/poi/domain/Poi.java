@@ -77,6 +77,12 @@ public class Poi extends BaseTimeEntity {
     @Column(name = "naver_map_url", length = 500)
     private String naverMapUrl;
 
+    @Column(name = "address")
+    private String address;
+
+    @Embedded
+    private EventPeriod eventPeriod;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "source", nullable = false, length = 20)
     private DataSource source;
@@ -85,7 +91,8 @@ public class Poi extends BaseTimeEntity {
     public Poi(Long regionId, PoiCategory category, String name, String description,
                Coordinate coordinate, String thumbnailUrl, List<String> imageUrls,
                Map<String, String> openHours, Map<String, String> breakTime,
-               String closedDays, String naverMapUrl, DataSource source) {
+               String closedDays, String naverMapUrl, String address,
+               EventPeriod eventPeriod, DataSource source) {
         this.regionId = regionId;
         this.category = category;
         this.name = name;
@@ -98,6 +105,8 @@ public class Poi extends BaseTimeEntity {
         this.breakTime = breakTime;
         this.closedDays = closedDays;
         this.naverMapUrl = naverMapUrl;
+        this.address = address;
+        this.eventPeriod = eventPeriod;
         this.source = source;
     }
 

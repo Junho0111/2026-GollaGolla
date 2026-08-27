@@ -1,11 +1,17 @@
 package com.gollagolla.itinerary.domain;
 
 import com.gollagolla.global.BaseTimeEntity;
+import com.gollagolla.global.exception.BusinessException;
+import com.gollagolla.poi.domain.Poi;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
+
+import static com.gollagolla.global.exception.ErrorCode.*;
+import static com.gollagolla.poi.domain.PoiCategory.*;
 
 @Entity
 @Table(name = "itinerary")
@@ -62,5 +68,13 @@ public class Itinerary extends BaseTimeEntity {
 
     public void issueShareToken(String token) {
         this.shareToken = token;
+    }
+
+    public void validateFestivalPoi(Poi poi, LocalDate targetDate) {
+        if (poi.getCategory() == FESTIVAL && poi.getEventPeriod() != null && poi.getEventPeriod().getEndDate() != null) {
+            if (targetDate.isAfter(poi.getEventPeriod().getEndDate())) {
+                throw new BusinessException(INVALID_INPUT_VALUE);
+            }
+        }
     }
 }

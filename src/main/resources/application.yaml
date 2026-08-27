@@ -5,26 +5,17 @@ spring:
   profiles:
     active: local
 
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:gollagolla;MODE=MYSQL
-    username: sa
-    password:
-
-  h2:
-    console:
-      enabled: false
-
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     properties:
       hibernate:
-        show_sql: true
+        show_sql: false
         format_sql: false
-        highlight_sql: true
+        highlight_sql: false
         jdbc:
           time_zone: Asia/Seoul
+    #open-in-view: false # OSIV 비활성화
 
 jwt:
   secret: gollagolla-secret-key-must-be-at-least-32-characters-long
