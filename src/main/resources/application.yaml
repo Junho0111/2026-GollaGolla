@@ -24,3 +24,15 @@ jwt:
 
 app:
   share-base-url: https://gollagolla.app/s/
+
+oauth:
+  kakao:
+    client-id: ${KAKAO_CLIENT_ID:your-kakao-client-id}
+    redirect-uri: ${KAKAO_REDIRECT_URI:http://localhost:3000/oauth/callback/kakao}
+  naver:
+    client-id: ${NAVER_CLIENT_ID:your-naver-client-id}
+    client-secret: ${NAVER_CLIENT_SECRET:your-naver-client-secret}
+  google:
+    client-id: ${GOOGLE_CLIENT_ID:your-google-client-id}
+    client-secret: ${GOOGLE_CLIENT_SECRET:your-google-client-secret}
+    redirect-uri: ${GOOGLE_REDIRECT_URI:http://localhost:3000/oauth/callback/google}
