@@ -8,7 +8,7 @@ import lombok.*;
 @Entity
 @Table(name = "region")
 @Getter
-@ToString(of = {"id", "parentId", "name", "depth"})
+@ToString(of = {"id", "parentId", "name", "depth", "areaCode"})
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Region {
@@ -25,8 +25,11 @@ public class Region {
     @Column(name = "depth", nullable = false)
     private Integer depth;
 
+    @Column(name = "area_code", length = 10)
+    private String areaCode;
+
     @Builder
-    public Region(Long parentId, String name, Integer depth) {
+    public Region(Long parentId, String name, Integer depth, String areaCode) {
         if (depth == 1 && parentId != null) {
             throw new BusinessException(ErrorCode.INVALID_REGION_HIERARCHY, "Depth1 지역은 상위 지역을 가질 수 없습니다.");
         }
@@ -36,5 +39,6 @@ public class Region {
         this.parentId = parentId;
         this.name = name;
         this.depth = depth;
+        this.areaCode = areaCode;
     }
 }

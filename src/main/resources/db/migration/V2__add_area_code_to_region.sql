@@ -1,0 +1,1 @@
+ALTER TABLE region ADD COLUMN area_code VARCHAR(10);

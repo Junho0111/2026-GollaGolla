@@ -71,7 +71,7 @@ public class Poi extends BaseTimeEntity {
     @Column(name = "break_time", columnDefinition = "json")
     private Map<String, String> breakTime;
 
-    @Column(name = "closed_days", length = 30)
+    @Column(name = "closed_days", length = 255)
     private String closedDays;
 
     @Column(name = "naver_map_url", length = 500)
