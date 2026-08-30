@@ -69,4 +69,35 @@ class QPoiRepositoryTest {
         assertThat(result.getContent()).hasSize(1);
         assertThat(result.getContent().get(0).getName()).isEqualTo("test poi");
     }
+
+    @Test
+    void 부모_지역으로_검색_시_자식_지역의_POI도_조회() {
+        // given
+        Region depth1 = regionRepository.save(Region.builder()
+                .name("제주도")
+                .depth(1)
+                .build());
+
+        Region depth2 = regionRepository.save(Region.builder()
+                .name("서귀포시")
+                .depth(2)
+                .parentId(depth1.getId())
+                .build());
+
+        Poi poi = Poi.builder()
+                .regionId(depth2.getId())
+                .category(PoiCategory.ATTRACTION)
+                .name("천지연폭포")
+                .coordinate(new Coordinate(BigDecimal.ZERO, BigDecimal.ZERO))
+                .source(DataSource.INTERNAL)
+                .build();
+        poiRepository.save(poi);
+
+        // when
+        Page<PoiCardDto> result = qPoiRepository.findPoiFeed(depth1.getId(), PoiCategory.ATTRACTION, PageRequest.of(0, 10), null);
+
+        // then
+        assertThat(result.getContent()).hasSize(1);
+        assertThat(result.getContent().get(0).getName()).isEqualTo("천지연폭포");
+    }
 }

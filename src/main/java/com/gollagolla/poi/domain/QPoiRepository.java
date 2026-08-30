@@ -18,6 +18,7 @@ import java.util.List;
 import static com.gollagolla.poi.domain.QPoi.poi;
 import static com.gollagolla.poi.domain.QRegion.region;
 import static com.querydsl.core.types.dsl.Expressions.asBoolean;
+import static com.querydsl.jpa.JPAExpressions.select;
 
 @Repository
 @RequiredArgsConstructor
@@ -73,7 +74,13 @@ public class QPoiRepository {
         if (regionId == null) {
             return null;
         }
-        return poi.regionId.eq(regionId);
+        return poi.regionId.eq(regionId)
+                .or(poi.regionId.in(
+                        select(region.id)
+                        .from(region)
+                        .where(region.parentId.eq(regionId))
+                )
+        );
     }
 
     private BooleanExpression eqCategory(PoiCategory category) {

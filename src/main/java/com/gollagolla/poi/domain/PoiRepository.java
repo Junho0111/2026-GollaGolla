@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 
 public interface PoiRepository extends JpaRepository<Poi, Long> {
 
+    boolean existsByNameAndRegionId(String name, Long regionId);
+
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Poi p SET p.viewCount = p.viewCount + 1 WHERE p.id = :poiId")
     void increaseViewCount(@Param("poiId") Long poiId);
