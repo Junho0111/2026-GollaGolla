@@ -1,4 +1,4 @@
-package com.gollagolla.config;
+package com.gollagolla.global.config;
 
 import com.gollagolla.auth.ui.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;

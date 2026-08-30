@@ -1,6 +1,6 @@
 package com.gollagolla.itinerary.domain;
 
-import com.gollagolla.config.EnableJpaAuditingConfig;
+import com.gollagolla.global.config.EnableJpaAuditingConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;

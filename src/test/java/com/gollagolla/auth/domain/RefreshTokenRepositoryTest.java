@@ -1,6 +1,6 @@
 package com.gollagolla.auth.domain;
 
-import com.gollagolla.config.QuerydslConfig;
+import com.gollagolla.global.config.QuerydslConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;

@@ -1,4 +1,4 @@
-package com.gollagolla.config;
+package com.gollagolla.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

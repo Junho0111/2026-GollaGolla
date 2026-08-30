@@ -1,6 +1,6 @@
 package com.gollagolla.poi.domain;
 
-import com.gollagolla.config.EnableJpaAuditingConfig;
+import com.gollagolla.global.config.EnableJpaAuditingConfig;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

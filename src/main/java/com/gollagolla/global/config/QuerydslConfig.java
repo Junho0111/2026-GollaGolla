@@ -1,4 +1,4 @@
-package com.gollagolla.config;
+package com.gollagolla.global.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
