@@ -10,6 +10,7 @@ import com.gollagolla.poi.domain.PoiCategory;
 import com.gollagolla.poi.domain.PoiRepository;
 import com.gollagolla.poi.domain.QPoiRepository;
 import com.gollagolla.poi.ui.dto.PoiDetailResponse;
+import com.gollagolla.wishlist.domain.WishlistRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -39,6 +40,9 @@ class PoiQueryServiceTest {
 
     @Mock
     QPoiRepository qPoiRepository;
+
+    @Mock
+    WishlistRepository wishlistRepository;
 
     @Test
     void getPoiFeed_성공() {
@@ -92,7 +96,7 @@ class PoiQueryServiceTest {
         given(poiRepository.findById(poiId)).willReturn(Optional.of(poi));
 
         // when
-        PoiDetailResponse result = poiQueryService.getPoiDetail(poiId);
+        PoiDetailResponse result = poiQueryService.getPoiDetail(poiId, null);
 
         // then
         assertThat(result.getName()).isEqualTo("detail poi");
@@ -106,7 +110,7 @@ class PoiQueryServiceTest {
         given(poiRepository.findById(poiId)).willReturn(Optional.empty());
 
         // when & then
-        assertThatThrownBy(() -> poiQueryService.getPoiDetail(poiId))
+        assertThatThrownBy(() -> poiQueryService.getPoiDetail(poiId, null))
                 .isInstanceOf(BusinessException.class)
                 .hasMessageContaining("존재하지 않는 장소입니다.");
     }

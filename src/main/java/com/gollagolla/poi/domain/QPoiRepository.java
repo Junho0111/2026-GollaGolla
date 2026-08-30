@@ -5,6 +5,7 @@ import com.gollagolla.poi.application.dto.PoiSearchResultDto;
 import com.gollagolla.poi.application.dto.QPoiCardDto;
 import com.gollagolla.poi.application.dto.QPoiSearchResultDto;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,9 @@ import java.util.List;
 
 import static com.gollagolla.poi.domain.QPoi.poi;
 import static com.gollagolla.poi.domain.QRegion.region;
+import static com.gollagolla.wishlist.domain.QWishlist.wishlist;
 import static com.querydsl.core.types.dsl.Expressions.asBoolean;
+import static com.querydsl.jpa.JPAExpressions.*;
 import static com.querydsl.jpa.JPAExpressions.select;
 
 @Repository
@@ -27,6 +30,15 @@ public class QPoiRepository {
     private final JPAQueryFactory queryFactory;
 
     public Page<PoiCardDto> findPoiFeed(Long regionId, PoiCategory category, Pageable pageable, Long memberId) {
+        BooleanExpression isWished = memberId == null ? asBoolean(false) :
+                selectOne()
+                .from(wishlist)
+                .where(
+                        wishlist.poiId.eq(poi.id)
+                        .and(wishlist.memberId.eq(memberId))
+                )
+                .exists();
+
         List<PoiCardDto> content = queryFactory
                 .select(new QPoiCardDto(
                         poi.id,
@@ -36,7 +48,7 @@ public class QPoiRepository {
                         poi.reviewCount,
                         poi.wishCount,
                         poi.popularityScore,
-                        asBoolean(false) // Wishlist 구현 후 memberId를 이용한 wishlist join 처리
+                        isWished
                 ))
                 .from(poi)
                 .where(eqRegionId(regionId), eqCategory(category))

@@ -23,6 +23,7 @@ public class PoiDetailResponse {
     private String naverMapUrl;
     private PoiCategory category;
     private String description;
+    private boolean isWished;
 
     private PoiDetailResponse() {
     }
@@ -31,7 +32,8 @@ public class PoiDetailResponse {
                               BigDecimal lat, BigDecimal lng, String thumbnailUrl,
                               List<String> imageUrls, Map<String, String> openHours,
                               Map<String, String> breakTime, String closedDays,
-                              String naverMapUrl, PoiCategory category, String description) {
+                              String naverMapUrl, PoiCategory category, String description,
+                              boolean isWished) {
         this.poiId = poiId;
         this.name = name;
         this.rating = rating;
@@ -45,13 +47,15 @@ public class PoiDetailResponse {
         this.naverMapUrl = naverMapUrl;
         this.category = category;
         this.description = description;
+        this.isWished = isWished;
     }
 
     public static PoiDetailResponse of(Long poiId, String name, BigDecimal rating,
                                        BigDecimal lat, BigDecimal lng, String thumbnailUrl,
                                        List<String> imageUrls, Map<String, String> openHours,
                                        Map<String, String> breakTime, String closedDays,
-                                       String naverMapUrl, PoiCategory category, String description) {
+                                       String naverMapUrl, PoiCategory category, String description,
+                                       boolean isWished) {
         return new PoiDetailResponse(
                 poiId,
                 name,
@@ -65,6 +69,7 @@ public class PoiDetailResponse {
                 closedDays,
                 naverMapUrl,
                 category,
-                description);
+                description,
+                isWished);
     }
 }

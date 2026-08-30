@@ -115,8 +115,8 @@ class PoiControllerTest {
     @Test
     void getPoiDetail_정상조회() throws Exception {
         // given
-        PoiDetailResponse response = PoiDetailResponse.of(1L, "전주 한옥마을", BigDecimal.valueOf(4.5), BigDecimal.ZERO, BigDecimal.ZERO, "url", List.of(), java.util.Map.of("월", "09:00"), java.util.Map.of("월", "12:00-13:00"), "closed", "naver", PoiCategory.ATTRACTION, "desc");
-        given(poiQueryService.getPoiDetail(1L)).willReturn(response);
+        PoiDetailResponse response = PoiDetailResponse.of(1L, "전주 한옥마을", BigDecimal.valueOf(4.5), BigDecimal.ZERO, BigDecimal.ZERO, "url", List.of(), java.util.Map.of("월", "09:00"), java.util.Map.of("월", "12:00-13:00"), "closed", "naver", PoiCategory.ATTRACTION, "desc", false);
+        given(poiQueryService.getPoiDetail(any(), any())).willReturn(response);
 
         // when & then
         mockMvc.perform(get("/api/v1/pois/1"))
@@ -127,7 +127,7 @@ class PoiControllerTest {
     @Test
     void getPoiDetail_존재하지_않는_장소면_404_반환() throws Exception {
         // given
-        given(poiQueryService.getPoiDetail(999L))
+        given(poiQueryService.getPoiDetail(any(), any()))
                 .willThrow(new BusinessException(ErrorCode.POI_NOT_FOUND));
 
         // when & then

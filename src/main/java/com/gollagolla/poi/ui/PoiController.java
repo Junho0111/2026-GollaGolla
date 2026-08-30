@@ -51,7 +51,7 @@ public class PoiController {
 
     @GetMapping("/pois/{poiId}")
     @ResponseStatus(HttpStatus.OK)
-    public PoiDetailResponse getPoiDetail(@PathVariable Long poiId) {
-        return poiQueryService.getPoiDetail(poiId);
+    public PoiDetailResponse getPoiDetail(@PathVariable Long poiId, @AuthenticationPrincipal Long memberId) {
+        return poiQueryService.getPoiDetail(poiId, memberId);
     }
 }

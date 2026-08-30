@@ -9,6 +9,7 @@ import com.gollagolla.poi.domain.QPoiRepository;
 import com.gollagolla.poi.ui.dto.PoiDetailResponse;
 import com.gollagolla.global.exception.BusinessException;
 import com.gollagolla.global.exception.ErrorCode;
+import com.gollagolla.wishlist.domain.WishlistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ public class PoiQueryService {
 
     private final PoiRepository poiRepository;
     private final QPoiRepository qPoiRepository;
+    private final WishlistRepository wishlistRepository;
 
     @Transactional(readOnly = true)
     public Page<PoiCardDto> getPoiFeed(Long regionId, PoiCategory category, Pageable pageable, Long memberId) {
@@ -35,11 +37,13 @@ public class PoiQueryService {
     }
 
     @Transactional
-    public PoiDetailResponse getPoiDetail(Long poiId) {
+    public PoiDetailResponse getPoiDetail(Long poiId, Long memberId) {
         Poi poi = poiRepository.findById(poiId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.POI_NOT_FOUND, "poiId=" + poiId));
 
         poiRepository.increaseViewCount(poiId);
+
+        boolean isWished = memberId != null && wishlistRepository.existsByMemberIdAndPoiId(memberId, poiId);
 
         return PoiDetailResponse.of(
                 poi.getId(),
@@ -54,7 +58,8 @@ public class PoiQueryService {
                 poi.getClosedDays(),
                 poi.getNaverMapUrl(),
                 poi.getCategory(),
-                poi.getDescription()
+                poi.getDescription(),
+                isWished
         );
     }
 }
