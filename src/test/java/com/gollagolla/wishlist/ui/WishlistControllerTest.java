@@ -1,5 +1,6 @@
 package com.gollagolla.wishlist.ui;
 
+import com.gollagolla.poi.domain.PoiCategory;
 import tools.jackson.databind.ObjectMapper;
 import com.gollagolla.auth.support.JwtTokenProvider;
 import com.gollagolla.wishlist.application.WishlistService;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
@@ -41,7 +43,14 @@ class WishlistControllerTest {
     void 내_찜_목록_조회() throws Exception {
         // given
         given(wishlistService.getMyWishlists(null))
-                .willReturn(List.of(WishlistItemDto.of(1L, "장소1", true)));
+                .willReturn(List.of(WishlistItemDto.of(
+                        1L,
+                        "장소1",
+                        true,
+                        "url",
+                        BigDecimal.valueOf(4.5),
+                        "address",
+                        PoiCategory.ATTRACTION)));
 
         // when & then
         mockMvc.perform(get("/api/v1/wishlist"))

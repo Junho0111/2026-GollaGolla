@@ -34,15 +34,34 @@ public class WishlistService {
                 .map(Wishlist::getPoiId)
                 .toList();
 
-        Map<Long, String> poiNameMap = poiRepository.findAllById(poiIds).stream()
-                .collect(Collectors.toMap(Poi::getId, Poi::getName));
+        Map<Long, Poi> poiMap = poiRepository.findAllById(poiIds).stream()
+                .collect(Collectors.toMap(Poi::getId, poi -> poi));
 
         return wishlists.stream()
-                .map(wishlist -> WishlistItemDto.of(
-                        wishlist.getPoiId(),
-                        poiNameMap.getOrDefault(wishlist.getPoiId(), "알 수 없는 장소"),
-                        wishlist.getIsPublic()
-                ))
+                .map(wishlist -> {
+                    Poi poi = poiMap.get(wishlist.getPoiId());
+                    if (poi == null) {
+                        return WishlistItemDto.of(
+                                wishlist.getPoiId(),
+                                "알 수 없는 장소",
+                                wishlist.getIsPublic(),
+                                null,
+                                null,
+                                null,
+                                null
+                        );
+                    }
+
+                    return WishlistItemDto.of(
+                            wishlist.getPoiId(),
+                            poi.getName(),
+                            wishlist.getIsPublic(),
+                            poi.getThumbnailUrl(),
+                            poi.getRating() != null ? poi.getRating().getScore() : null,
+                            poi.getAddress(),
+                            poi.getCategory()
+                    );
+                })
                 .toList();
     }
 
