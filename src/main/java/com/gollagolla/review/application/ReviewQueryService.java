@@ -36,11 +36,13 @@ public class ReviewQueryService {
                 .collect(Collectors.toMap(Member::getId, Member::getNickname));
 
         return reviews.stream()
-                .map(r -> ReviewItemDto.of(
-                        r.getId(),
-                        nicknameMap.getOrDefault(r.getMemberId(), "알 수 없음"),
-                        r.getRating(),
-                        r.getContent()
+                .map(review -> ReviewItemDto.of(
+                        review.getId(),
+                        review.getMemberId(),
+                        nicknameMap.getOrDefault(review.getMemberId(), "알 수 없음"),
+                        review.getRating(),
+                        review.getContent(),
+                        review.getCreatedAt()
                 ))
                 .toList();
     }
