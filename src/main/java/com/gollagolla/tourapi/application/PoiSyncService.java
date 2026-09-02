@@ -118,6 +118,7 @@ public class PoiSyncService {
         Map<String, String> openHoursMap = null;
         String closedDaysStr = null;
         try {
+            Thread.sleep(200);
             DetailIntroResponse detailRes = tourApiClient.fetchDetailIntro(item.contentId(), Integer.parseInt(item.contentTypeId()));
             if (detailRes != null && detailRes.getItem() != null) {
                 String openHours = detailRes.getItem().getOpenHours();
@@ -129,6 +130,9 @@ public class PoiSyncService {
 
                 closedDaysStr = closedDays;
             }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.warn("[TourAPI] 스레드 대기 중 인터럽트 발생 - POI: {}", item.title());
         } catch (Exception e) {
             log.warn("[TourAPI] 상세 정보 조회 실패 - POI: {}", item.title());
         }
