@@ -55,11 +55,11 @@ class ReviewQueryServiceTest {
         given(memberRepository.findAllById(any())).willReturn(List.of(member));
 
         // when
-        List<ReviewItemDto> results = reviewQueryService.getReviews(1L, pageable);
+        org.springframework.data.domain.Slice<ReviewItemDto> results = reviewQueryService.getReviews(1L, pageable);
 
         // then
-        assertThat(results).hasSize(1);
-        assertThat(results.get(0).getNickname()).isEqualTo("테스트유저");
+        assertThat(results.getContent()).hasSize(1);
+        assertThat(results.getContent().get(0).getNickname()).isEqualTo("테스트유저");
     }
 
     @Test
@@ -79,10 +79,10 @@ class ReviewQueryServiceTest {
         given(memberRepository.findAllById(any())).willReturn(List.of()); // 탈퇴로 인해 조회 결과 없음
 
         // when
-        List<ReviewItemDto> results = reviewQueryService.getReviews(1L, pageable);
+        org.springframework.data.domain.Slice<ReviewItemDto> results = reviewQueryService.getReviews(1L, pageable);
 
         // then
-        assertThat(results).hasSize(1);
-        assertThat(results.get(0).getNickname()).isEqualTo("알 수 없음");
+        assertThat(results.getContent()).hasSize(1);
+        assertThat(results.getContent().get(0).getNickname()).isEqualTo("알 수 없음");
     }
 }

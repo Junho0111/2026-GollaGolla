@@ -9,15 +9,17 @@ import java.util.List;
 public class ReviewListResponse {
 
     private List<ReviewItemDto> content;
+    private boolean hasNext;
 
     private ReviewListResponse() {
     }
 
-    private ReviewListResponse(List<ReviewItemDto> content) {
+    private ReviewListResponse(List<ReviewItemDto> content, boolean hasNext) {
         this.content = content;
+        this.hasNext = hasNext;
     }
 
-    public static ReviewListResponse of(List<ReviewItemDto> content) {
-        return new ReviewListResponse(content);
+    public static ReviewListResponse of(List<ReviewItemDto> content, boolean hasNext) {
+        return new ReviewListResponse(content, hasNext);
     }
 }

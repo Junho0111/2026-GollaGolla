@@ -37,7 +37,7 @@ public class PoiController {
             @AuthenticationPrincipal Long memberId) {
         Pageable pageable = PageRequest.of(page, size);
         Page<PoiCardDto> result = poiQueryService.getPoiFeed(regionId, category, pageable, memberId);
-        return PoiFeedResponse.of(result.getContent(), result.getTotalPages());
+        return PoiFeedResponse.of(result.getContent(), result.getTotalPages(), result.hasNext());
     }
 
     @GetMapping("/search")

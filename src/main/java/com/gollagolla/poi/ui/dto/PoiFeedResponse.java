@@ -10,13 +10,15 @@ public class PoiFeedResponse {
 
     private final List<PoiCardDto> content;
     private final int totalPages;
+    private final boolean hasNext;
 
-    private PoiFeedResponse(List<PoiCardDto> content, int totalPages) {
+    private PoiFeedResponse(List<PoiCardDto> content, int totalPages, boolean hasNext) {
         this.content = content;
         this.totalPages = totalPages;
+        this.hasNext = hasNext;
     }
 
-    public static PoiFeedResponse of(List<PoiCardDto> content, int totalPages) {
-        return new PoiFeedResponse(content, totalPages);
+    public static PoiFeedResponse of(List<PoiCardDto> content, int totalPages, boolean hasNext) {
+        return new PoiFeedResponse(content, totalPages, hasNext);
     }
 }

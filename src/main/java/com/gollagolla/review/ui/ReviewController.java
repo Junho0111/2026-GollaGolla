@@ -13,12 +13,11 @@ import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/pois/{poiId}/reviews")
@@ -37,8 +36,8 @@ public class ReviewController {
             @RequestParam(defaultValue = "20") @Min(value = 1, message = "size는 1 이상이어야 합니다.") @Max(value = 100, message = "size는 100 이하이어야 합니다.") int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        List<ReviewItemDto> items = reviewQueryService.getReviews(poiId, pageable);
-        return ReviewListResponse.of(items);
+        Slice<ReviewItemDto> items = reviewQueryService.getReviews(poiId, pageable);
+        return ReviewListResponse.of(items.getContent(), items.hasNext());
     }
 
     @PostMapping

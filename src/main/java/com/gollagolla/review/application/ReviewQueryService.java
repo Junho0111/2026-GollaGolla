@@ -8,6 +8,8 @@ import com.gollagolla.review.domain.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +25,7 @@ public class ReviewQueryService {
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
 
-    public List<ReviewItemDto> getReviews(Long poiId, Pageable pageable) {
+    public Slice<ReviewItemDto> getReviews(Long poiId, Pageable pageable) {
         Page<Review> reviewPage = reviewRepository.findByPoiId(poiId, pageable);
         List<Review> reviews = reviewPage.getContent();
 
@@ -35,7 +37,7 @@ public class ReviewQueryService {
         Map<Long, String> nicknameMap = memberRepository.findAllById(memberIds).stream()
                 .collect(Collectors.toMap(Member::getId, Member::getNickname));
 
-        return reviews.stream()
+        List<ReviewItemDto> dtoList = reviews.stream()
                 .map(review -> ReviewItemDto.of(
                         review.getId(),
                         review.getMemberId(),
@@ -45,5 +47,7 @@ public class ReviewQueryService {
                         review.getCreatedAt()
                 ))
                 .toList();
+                
+        return new SliceImpl<>(dtoList, pageable, reviewPage.hasNext());
     }
 }
