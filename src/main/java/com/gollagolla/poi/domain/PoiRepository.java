@@ -11,19 +11,19 @@ public interface PoiRepository extends JpaRepository<Poi, Long> {
 
     boolean existsByNameAndRegionId(String name, Long regionId);
 
-    @Modifying(clearAutomatically = true)
-    @Query("UPDATE Poi p SET p.viewCount = p.viewCount + 1, p.version = p.version + 1 WHERE p.id = :poiId")
+    @Modifying
+    @Query("UPDATE Poi p SET p.viewCount = p.viewCount + 1 WHERE p.id = :poiId")
     void increaseViewCount(@Param("poiId") Long poiId);
 
-    @Modifying(clearAutomatically = true)
-    @Query("UPDATE Poi p SET p.wishCount = p.wishCount + 1, p.version = p.version + 1 WHERE p.id = :poiId")
+    @Modifying
+    @Query("UPDATE Poi p SET p.wishCount = p.wishCount + 1 WHERE p.id = :poiId")
     void increaseWishCount(@Param("poiId") Long poiId);
 
-    @Modifying(clearAutomatically = true)
-    @Query("UPDATE Poi p SET p.wishCount = p.wishCount - 1, p.version = p.version + 1 WHERE p.id = :poiId AND p.wishCount > 0")
+    @Modifying
+    @Query("UPDATE Poi p SET p.wishCount = p.wishCount - 1 WHERE p.id = :poiId AND p.wishCount > 0")
     void decreaseWishCount(@Param("poiId") Long poiId);
 
-    @Modifying(clearAutomatically = true)
+    @Modifying
     @Query("UPDATE Poi p SET p.rating.score = :ratingScore, p.reviewCount = :reviewCount, p.popularityScore = :popularityScore, p.version = p.version + 1 WHERE p.id = :poiId")
     void updateSeedStats(@Param("poiId") Long poiId,
                          @Param("ratingScore") BigDecimal ratingScore,

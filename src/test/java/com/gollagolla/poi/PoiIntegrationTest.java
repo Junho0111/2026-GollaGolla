@@ -1,6 +1,7 @@
 package com.gollagolla.poi;
 
 import com.gollagolla.poi.domain.*;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ class PoiIntegrationTest {
 
     @Autowired
     PoiRepository poiRepository;
+
+    @Autowired
+    EntityManager entityManager;
 
     private Region depth1;
     private Region depth2;
@@ -94,6 +98,8 @@ class PoiIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("전주 한옥마을")));
 
+        entityManager.flush();
+        entityManager.clear();
         int afterViewCount = poiRepository.findById(poi1.getId()).get().getViewCount();
         assertThat(afterViewCount).isEqualTo(beforeViewCount + 1);
     }

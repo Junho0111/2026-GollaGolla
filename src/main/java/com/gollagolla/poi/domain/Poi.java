@@ -3,6 +3,7 @@ package com.gollagolla.poi.domain;
 import com.gollagolla.global.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "poi")
+@DynamicUpdate
 @Getter
 @ToString(of = {"id", "name", "category", "regionId"})
 @EqualsAndHashCode(of = "id", callSuper = false)

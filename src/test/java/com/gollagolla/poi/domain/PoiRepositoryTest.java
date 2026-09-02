@@ -2,6 +2,7 @@ package com.gollagolla.poi.domain;
 
 import com.gollagolla.global.config.EnableJpaAuditingConfig;
 import com.gollagolla.global.config.QuerydslConfig;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -21,6 +22,9 @@ class PoiRepositoryTest {
     @Autowired
     PoiRepository poiRepository;
 
+    @Autowired
+    EntityManager entityManager;
+
     @Test
     void Poi_등록_및_조회() {
         // given
@@ -31,7 +35,7 @@ class PoiRepositoryTest {
                 .coordinate(new Coordinate(BigDecimal.ZERO, BigDecimal.ZERO))
                 .source(DataSource.INTERNAL)
                 .build();
-        
+
         Poi savedPoi = poiRepository.save(poi);
 
         // when
@@ -57,6 +61,8 @@ class PoiRepositoryTest {
 
         // when
         poiRepository.increaseViewCount(savedPoi.getId());
+        entityManager.flush();
+        entityManager.clear();
 
         //then
         Optional<Poi> updatedPoi = poiRepository.findById(savedPoi.getId());
