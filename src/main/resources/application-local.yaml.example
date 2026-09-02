@@ -1,4 +1,11 @@
 spring:
+  ai:
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY:your-gemini-api-key}
+        chat:
+          options:
+            model: gemini-1.5-pro
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/gollagolla?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
@@ -33,11 +40,3 @@ tourapi:
   base-url: https://apis.data.go.kr/B551011/KorService2
   auto-sync: false
   target-area-codes:
-
-  ai:
-    google:
-      genai:
-        api-key: ${GEMINI_API_KEY:your-gemini-api-key}
-        chat:
-          options:
-            model: gemini-1.5-pro

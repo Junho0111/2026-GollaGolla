@@ -164,10 +164,14 @@ class ItineraryIntegrationTest {
                         .content(itemReq))
                 .andExpect(status().isCreated());
 
-        // 다건 항목 추가 (dayNo, seq 없는 경우)
+        // 다건 항목 추가
         String bulkReq = objectMapper.writeValueAsString(Map.of(
                 "items", List.of(
-                        Map.of("poiId", poi2.getId())
+                        Map.of(
+                                "poiId", poi2.getId(),
+                                "dayNo", 1,
+                                "seq", 1
+                        )
                 )
         ));
         mockMvc.perform(post("/api/v1/itineraries/{id}/items/bulk", itineraryId)
