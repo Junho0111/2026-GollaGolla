@@ -65,25 +65,11 @@ public class ItineraryService {
     public void addItemsBulk(Long memberId, Long id, CreateBulkItemRequest request) {
         Itinerary itinerary = getItineraryWithAuth(id, memberId);
 
-        int maxSeqDay1 = itinerary.getItems().stream()
-                .filter(itineraryItem -> itineraryItem.getDayNo() != null && itineraryItem.getDayNo() == 1)
-                .mapToInt(ItineraryItem::getSeq)
-                .max()
-                .orElse(-1);
-
         for (BulkItemDto dto : request.getItems()) {
-            Integer dayNo = dto.getDayNo();
-            Integer seq = dto.getSeq();
-
-            if (dayNo == null || seq == null) {
-                dayNo = 1;
-                seq = ++maxSeqDay1;
-            }
-
             ItineraryItem item = ItineraryItem.builder()
                     .poiId(dto.getPoiId())
-                    .dayNo(dayNo)
-                    .seq(seq)
+                    .dayNo(dto.getDayNo())
+                    .seq(dto.getSeq())
                     .startTime(dto.getStartTime())
                     .isAnchor(dto.getIsAnchor())
                     .build();
