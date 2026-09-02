@@ -42,3 +42,11 @@ tourapi:
   base-url: https://apis.data.go.kr/B551011/KorService2
   auto-sync:
   target-area-codes:
+
+ai:
+  google:
+    genai:
+      api-key: ${GEMINI_API_KEY:your-gemini-api-key}
+      chat:
+        options:
+          model: gemini-1.5-pro

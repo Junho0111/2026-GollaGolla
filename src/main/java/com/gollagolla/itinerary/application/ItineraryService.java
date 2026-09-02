@@ -48,6 +48,13 @@ public class ItineraryService {
         return mapToResponse(itinerary);
     }
 
+    @Transactional(readOnly = true)
+    public List<ItineraryListItemResponse> getItineraries(Long memberId) {
+        return itineraryRepository.findAllByMemberIdOrderByIdDesc(memberId).stream()
+                .map(ItineraryListItemResponse::from)
+                .toList();
+    }
+
     @Transactional
     public void addItem(Long memberId, Long id, CreateItemRequest request) {
         Itinerary itinerary = getItineraryWithAuth(id, memberId);
@@ -131,6 +138,12 @@ public class ItineraryService {
         Itinerary itinerary = itineraryRepository.findByShareToken(token)
                 .orElseThrow(() -> new BusinessException(ErrorCode.SHARE_TOKEN_NOT_FOUND));
         return mapToResponse(itinerary);
+    }
+
+    @Transactional
+    public void deleteItinerary(Long memberId, Long id) {
+        Itinerary itinerary = getItineraryWithAuth(id, memberId);
+        itineraryRepository.delete(itinerary);
     }
 
     private Itinerary getItineraryWithAuth(Long id, Long memberId) {

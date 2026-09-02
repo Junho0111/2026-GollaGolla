@@ -2,11 +2,14 @@ package com.gollagolla.itinerary.ui;
 
 import com.gollagolla.itinerary.application.ItineraryService;
 import com.gollagolla.itinerary.ui.dto.*;
+import com.gollagolla.itinerary.application.AiItineraryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ItineraryController {
 
     private final ItineraryService itineraryService;
+    private final AiItineraryService aiItineraryService;
 
     @PostMapping("/itineraries")
     @ResponseStatus(HttpStatus.CREATED)
@@ -23,6 +27,23 @@ public class ItineraryController {
     ) {
         Long id = itineraryService.createItinerary(memberId, request);
         return CreateItineraryResponse.of(id);
+    }
+
+    @PostMapping("/itineraries/ai")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CreateAiItineraryResponse createAiItinerary(
+            @RequestBody @Valid CreateAiItineraryRequest request,
+            @AuthenticationPrincipal Long memberId
+    ) {
+        return aiItineraryService.createAiItinerary(memberId, request);
+    }
+
+    @GetMapping("/itineraries")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ItineraryListItemResponse> getItineraries(
+            @AuthenticationPrincipal Long memberId
+    ) {
+        return itineraryService.getItineraries(memberId);
     }
 
     @GetMapping("/itineraries/{id}")
@@ -73,6 +94,15 @@ public class ItineraryController {
             @AuthenticationPrincipal Long memberId
     ) {
         itineraryService.deleteItem(memberId, id, itemId);
+    }
+
+    @DeleteMapping("/itineraries/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteItinerary(
+            @PathVariable Long id,
+            @AuthenticationPrincipal Long memberId
+    ) {
+        itineraryService.deleteItinerary(memberId, id);
     }
 
     @PostMapping("/itineraries/{id}/share")

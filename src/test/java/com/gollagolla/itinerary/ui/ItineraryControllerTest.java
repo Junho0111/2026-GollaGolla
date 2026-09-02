@@ -3,6 +3,7 @@ package com.gollagolla.itinerary.ui;
 import tools.jackson.databind.ObjectMapper;
 import com.gollagolla.auth.support.JwtTokenProvider;
 import com.gollagolla.itinerary.application.ItineraryService;
+import com.gollagolla.itinerary.application.AiItineraryService;
 import com.gollagolla.itinerary.domain.TransportMode;
 import com.gollagolla.itinerary.ui.dto.CreateItemRequest;
 import com.gollagolla.itinerary.ui.dto.CreateItineraryRequest;
@@ -31,6 +32,9 @@ class ItineraryControllerTest {
 
     @MockitoBean
     private ItineraryService itineraryService;
+
+    @MockitoBean
+    private AiItineraryService aiItineraryService;
 
     @MockitoBean
     private JwtTokenProvider jwtTokenProvider;
