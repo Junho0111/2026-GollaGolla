@@ -89,12 +89,19 @@ public class Poi extends BaseTimeEntity {
     @Column(name = "source", nullable = false, length = 20)
     private DataSource source;
 
+    @Column(name = "source_id", length = 50)
+    private String sourceId;
+
+    @Column(name = "content_type_id", length = 10)
+    private String contentTypeId;
+
     @Builder
     public Poi(Long regionId, PoiCategory category, String name, String description,
                Coordinate coordinate, String thumbnailUrl, List<String> imageUrls,
                Map<String, String> openHours, Map<String, String> breakTime,
                String closedDays, String naverMapUrl, String address,
-               EventPeriod eventPeriod, DataSource source) {
+               EventPeriod eventPeriod, DataSource source,
+               String sourceId, String contentTypeId) {
         this.regionId = regionId;
         this.category = category;
         this.name = name;
@@ -110,6 +117,18 @@ public class Poi extends BaseTimeEntity {
         this.address = address;
         this.eventPeriod = eventPeriod;
         this.source = source;
+        this.sourceId = sourceId;
+        this.contentTypeId = contentTypeId;
+    }
+
+    public void updateDetail(Map<String, String> openHours, String closedDays) {
+        if (openHours != null) {
+            this.openHours = openHours;
+        }
+
+        if (closedDays != null) {
+            this.closedDays = closedDays;
+        }
     }
 
     public void applyRating(int score) {

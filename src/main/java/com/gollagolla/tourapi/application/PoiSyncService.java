@@ -169,6 +169,8 @@ public class PoiSyncService {
                 .source(DataSource.TOURAPI)
                 .openHours(openHours)
                 .closedDays(closedDays)
+                .sourceId(item.contentId())
+                .contentTypeId(item.contentTypeId())
                 .build();
     }
 
