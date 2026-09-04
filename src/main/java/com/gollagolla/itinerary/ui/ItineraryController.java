@@ -86,6 +86,17 @@ public class ItineraryController {
         itineraryService.updateItem(memberId, id, itemId, request);
     }
 
+    @PatchMapping("/itineraries/{id}/items/{itemId}/memo")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateItemMemo(
+            @PathVariable Long id,
+            @PathVariable Long itemId,
+            @RequestBody UpdateItemMemoRequest request,
+            @AuthenticationPrincipal Long memberId
+    ) {
+        itineraryService.updateItemMemo(memberId, id, itemId, request.getMemo());
+    }
+
     @DeleteMapping("/itineraries/{id}/items/{itemId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteItem(

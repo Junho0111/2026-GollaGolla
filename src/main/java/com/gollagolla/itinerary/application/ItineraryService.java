@@ -98,6 +98,18 @@ public class ItineraryService {
     }
 
     @Transactional
+    public void updateItemMemo(Long memberId, Long id, Long itemId, String memo) {
+        Itinerary itinerary = getItineraryWithAuth(id, memberId);
+
+        ItineraryItem item = itinerary.getItems().stream()
+                .filter(itineraryItem -> itineraryItem.getId().equals(itemId))
+                .findFirst()
+                .orElseThrow(() -> new BusinessException(ErrorCode.ITINERARY_ITEM_NOT_FOUND, "itemId=" + itemId));
+
+        item.updateMemo(memo);
+    }
+
+    @Transactional
     public void deleteItem(Long memberId, Long id, Long itemId) {
         Itinerary itinerary = getItineraryWithAuth(id, memberId);
 
