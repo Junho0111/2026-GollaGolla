@@ -4,6 +4,8 @@ import com.gollagolla.global.exception.BusinessException;
 import com.gollagolla.global.exception.ErrorCode;
 import com.gollagolla.itinerary.domain.*;
 import com.gollagolla.itinerary.ui.dto.*;
+import com.gollagolla.poi.domain.Poi;
+import com.gollagolla.poi.domain.PoiRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class ItineraryService {
 
     private final ItineraryRepository itineraryRepository;
+    private final PoiRepository poiRepository;
     private final ShareTokenService shareTokenService;
 
     @Value("${app.share-base-url}")
@@ -169,6 +172,14 @@ public class ItineraryService {
     }
 
     private ItineraryResponse mapToResponse(Itinerary itinerary) {
+        List<Long> poiIds = itinerary.getItems().stream()
+                .map(ItineraryItem::getPoiId)
+                .distinct()
+                .toList();
+
+        Map<Long, Poi> poiMap = poiRepository.findAllById(poiIds).stream()
+                .collect(Collectors.toMap(Poi::getId, poi -> poi));
+
         Map<Integer, List<ItineraryItem>> groupedByDay = itinerary.getItems().stream()
                 .collect(Collectors.groupingBy(ItineraryItem::getDayNo));
 
@@ -177,12 +188,23 @@ public class ItineraryService {
                 .map(entry -> {
                     List<ItineraryItemResponse> itemResponses = entry.getValue().stream()
                             .sorted(Comparator.comparing(ItineraryItem::getSeq))
-                            .map(itineraryItem -> ItineraryItemResponse.of(
-                                    itineraryItem.getId(), itineraryItem.getPoiId(),
-                                    itineraryItem.getSeq(), itineraryItem.getIsAnchor(),
-                                    itineraryItem.getStartTime(), itineraryItem.getEndTime(),
-                                    itineraryItem.getMemo()
-                            ))
+                            .map(item -> {
+                                Poi poi = poiMap.get(item.getPoiId());
+                                String poiName = poi != null ? poi.getName() : "Unknown";
+                                String thumbnailUrl = poi != null ? poi.getThumbnailUrl() : null;
+
+                                return ItineraryItemResponse.of(
+                                        item.getId(),
+                                        item.getPoiId(),
+                                        poiName,
+                                        thumbnailUrl,
+                                        item.getSeq(),
+                                        item.getIsAnchor(),
+                                        item.getStartTime(),
+                                        item.getEndTime(),
+                                        item.getMemo()
+                                );
+                            })
                             .toList();
                     return ItineraryDayResponse.of(entry.getKey(), itemResponses);
                 })
