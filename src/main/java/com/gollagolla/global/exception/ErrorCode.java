@@ -16,6 +16,7 @@ public enum ErrorCode {
     EMPTY_OAUTH_PROVIDER(HttpStatus.BAD_REQUEST, "AUTH_008", "OAuth Provider 이름이 비어있습니다."),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH_009", "유효하지 않은 토큰입니다."),
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "AUTH_010", "존재하지 않는 회원입니다."),
+    REFRESH_TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "AUTH_011", "유효하지 않거나 만료된 리프레시 토큰입니다."),
 
     POI_NOT_FOUND(HttpStatus.NOT_FOUND, "POI_001", "존재하지 않는 장소입니다."),
     UNSUPPORTED_SEARCH_TYPE(HttpStatus.BAD_REQUEST, "POI_002", "지원하지 않는 검색 타입입니다. 현재 지원: poi"),

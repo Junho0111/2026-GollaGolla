@@ -35,6 +35,12 @@ public class AuthController {
         return authService.oauthLogin(provider, request.getAuthorizationCode());
     }
 
+    @PostMapping("/refresh")
+    @ResponseStatus(HttpStatus.OK)
+    public TokenRefreshResponse refresh(@RequestBody @Valid TokenRefreshRequest request) {
+        return authService.refresh(request.getRefreshToken());
+    }
+
     @DeleteMapping("/logout")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void logout(@AuthenticationPrincipal Long memberId) {

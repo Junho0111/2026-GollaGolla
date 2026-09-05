@@ -8,6 +8,7 @@ import com.gollagolla.auth.support.JwtTokenProvider;
 import com.gollagolla.auth.ui.dto.LoginResponse;
 import com.gollagolla.auth.ui.dto.OAuthResponse;
 import com.gollagolla.auth.ui.dto.SignUpResponse;
+import com.gollagolla.auth.ui.dto.TokenRefreshResponse;
 import com.gollagolla.member.domain.Member;
 import com.gollagolla.member.domain.MemberRepository;
 import com.gollagolla.member.domain.Provider;
@@ -118,6 +119,26 @@ public class AuthService {
 
         refreshTokenRepository.deleteByMemberId(memberId);
         memberRepository.delete(member);
+    }
+
+    @Transactional
+    public TokenRefreshResponse refresh(String rawRefreshToken) {
+        RefreshToken stored = refreshTokenRepository.findByToken(rawRefreshToken)
+                .orElseThrow(() -> new BusinessException(ErrorCode.REFRESH_TOKEN_INVALID));
+
+        if (stored.isRevoked() || stored.getExpiresAt().isBefore(LocalDateTime.now())) {
+            throw new BusinessException(ErrorCode.REFRESH_TOKEN_INVALID);
+        }
+
+        Member member = memberRepository.findById(stored.getMemberId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+
+        refreshTokenRepository.deleteByMemberId(member.getId());
+
+        String newAccessToken  = jwtTokenProvider.generateAccessToken(member.getId(), member.getRole());
+        String newRefreshToken = issueRefreshToken(member.getId());
+
+        return TokenRefreshResponse.of(newAccessToken, newRefreshToken);
     }
 
     private String issueRefreshToken(Long memberId) {
