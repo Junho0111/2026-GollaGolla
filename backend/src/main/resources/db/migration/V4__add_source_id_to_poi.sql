@@ -1,0 +1,2 @@
+ALTER TABLE poi ADD COLUMN source_id VARCHAR(50);
+ALTER TABLE poi ADD COLUMN content_type_id VARCHAR(10);

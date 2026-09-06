@@ -1,0 +1,41 @@
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+
+/* Pretendard 서브셋 — 한글 완성형(가~힣, 자모) + 라틴 기본/확장 + 앱에서 실제 쓰는
+   구두점/기호(★ ♥ ♡ ⛺ ✕ ▲ ▼ ← … — 등)만 포함. 원본 Variable 폰트(~2MB, 전체 굵기+다국어)
+   대신 실사용 굵기(400/500/600) 3벌만 서브셋해 굵기별 요청 시에만 개별 로드되게 함. */
+@font-face {
+  font-family: 'Pretendard';
+  src: url('./assets/fonts/Pretendard-Regular-subset.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('./assets/fonts/Pretendard-Medium-subset.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: url('./assets/fonts/Pretendard-SemiBold-subset.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Pretendard', system-ui, sans-serif;
+  }
+
+  body {
+    @apply bg-sand text-harbor;
+  }
+}
