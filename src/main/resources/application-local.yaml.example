@@ -5,7 +5,7 @@ spring:
         api-key: ${GEMINI_API_KEY:your-gemini-api-key}
         chat:
           options:
-            model: gemini-1.5-pro
+            model: gemini-2.5-flash
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/gollagolla?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true

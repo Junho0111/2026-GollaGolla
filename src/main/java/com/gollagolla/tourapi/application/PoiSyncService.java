@@ -4,7 +4,6 @@ import com.gollagolla.poi.domain.*;
 import com.gollagolla.tourapi.client.TourApiClient;
 import com.gollagolla.tourapi.client.dto.AreaBasedListResponse;
 import com.gollagolla.tourapi.client.dto.AreaBasedListResponse.PoiItem;
-import com.gollagolla.tourapi.client.dto.DetailIntroResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
