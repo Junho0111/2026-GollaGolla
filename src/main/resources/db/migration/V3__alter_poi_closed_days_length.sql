@@ -1,1 +1,0 @@
-ALTER TABLE poi MODIFY COLUMN closed_days VARCHAR(255);
