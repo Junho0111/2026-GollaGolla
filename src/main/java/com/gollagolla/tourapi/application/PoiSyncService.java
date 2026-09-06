@@ -105,38 +105,10 @@ public class PoiSyncService {
 
         PoiCategory category = CATEGORY_MAP.get(item.contentTypeId());
         Coordinate coordinate = new Coordinate(lat.get(), lng.get());
-        
-        PoiDetail detail = fetchDetailInfo(item);
-
-        Poi poi = buildPoiEntity(item, targetRegion, coordinate, category, detail.openHours(), detail.closedDays());
+        Poi poi = buildPoiEntity(item, targetRegion, coordinate, category, null, null);
 
         poiRepository.save(poi);
         log.debug("[TourAPI] POI 저장: {} (category={})", poi.getName(), category);
-    }
-
-    private PoiDetail fetchDetailInfo(PoiItem item) {
-        Map<String, String> openHoursMap = null;
-        String closedDaysStr = null;
-        try {
-            Thread.sleep(200);
-            DetailIntroResponse detailRes = tourApiClient.fetchDetailIntro(item.contentId(), Integer.parseInt(item.contentTypeId()));
-            if (detailRes != null && detailRes.getItem() != null) {
-                String openHours = detailRes.getItem().getOpenHours();
-                String closedDays = detailRes.getItem().getClosedDays();
-
-                if (openHours != null && !openHours.isBlank()) {
-                    openHoursMap = Map.of("info", openHours);
-                }
-
-                closedDaysStr = closedDays;
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            log.warn("[TourAPI] 스레드 대기 중 인터럽트 발생 - POI: {}", item.title());
-        } catch (Exception e) {
-            log.warn("[TourAPI] 상세 정보 조회 실패 - POI: {}", item.title());
-        }
-        return new PoiDetail(openHoursMap, closedDaysStr);
     }
 
     private Optional<BigDecimal> parseBigDecimal(String value) {
@@ -185,6 +157,4 @@ public class PoiSyncService {
         }
         return images;
     }
-
-    private record PoiDetail(Map<String, String> openHours, String closedDays) {}
 }
