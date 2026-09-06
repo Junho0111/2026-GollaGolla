@@ -16,7 +16,7 @@ export default function AppHeader() {
     <header className="sticky top-0 z-10 bg-sand/95 backdrop-blur-sm border-b border-harbor/10">
       <div className="max-w-5xl mx-auto px-5 py-4 flex items-center justify-between gap-4">
         <button onClick={() => navigate('/')}>
-          <Logo className="h-10 shrink-0" />
+          <Logo className="h-14 shrink-0" />
         </button>
         <nav className="flex items-center gap-4 text-sm font-medium shrink-0">
           {NAV_ITEMS.map((item) => (

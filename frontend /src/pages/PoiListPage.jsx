@@ -124,7 +124,7 @@ export default function PoiListPage() {
     <div className="min-h-screen bg-sand">
       <header className="sticky top-0 z-10 bg-sand/95 backdrop-blur-sm border-b border-harbor/10">
         <div className="max-w-5xl mx-auto px-5 py-4 flex items-center justify-between gap-4">
-          <Logo className="h-10 shrink-0" />
+          <Logo className="h-14 shrink-0" />
           <input
             type="search"
             value={searchInput}

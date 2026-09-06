@@ -99,7 +99,7 @@ export default function LoginPage() {
           backgroundSize: '18px 18px',
         }} />
         <div className="relative z-10 flex flex-col justify-between p-14 w-full">
-          <Logo className="h-64 lg:h-80 w-auto max-w-[80vw]" />
+          <Logo className="h-36 lg:h-48 w-auto max-w-[80vw] mt-16 lg:mt-20" />
 
           <div className="border border-sand/25 bg-harbor relative">
             <div className="p-8 flex justify-between items-start">
@@ -132,8 +132,8 @@ export default function LoginPage() {
       {/* 오른쪽: 폼 패널 */}
       <div className="flex-1 flex items-center justify-center px-6 py-16 bg-sand">
         <div className="w-full max-w-sm">
-          <div className="lg:hidden mb-10 flex justify-center">
-            <Logo className="h-48 w-auto max-w-[80vw]" />
+          <div className="lg:hidden mb-10 mt-16 flex justify-center">
+            <Logo className="h-28 w-auto max-w-[80vw]" />
           </div>
 
           {/* 탭 전환 — 흔한 알약형 세그먼트 대신 밑줄 언더라인 방식 */}

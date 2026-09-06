@@ -29,7 +29,7 @@ export default function SharedItineraryPage() {
   if (notFound) {
     return (
       <div className="min-h-screen bg-sand flex flex-col items-center justify-center gap-3">
-        <Logo className="h-10 mb-2" />
+        <Logo className="h-14 mb-2" />
         <p className="font-mono text-sm text-mist">유효하지 않거나 만료된 공유 링크입니다.</p>
         <button onClick={() => navigate('/')} className="text-sm text-seaglass underline">
           골라골라 둘러보기
@@ -53,7 +53,7 @@ export default function SharedItineraryPage() {
       <header className="border-b border-harbor/10">
         <div className="max-w-3xl mx-auto px-5 py-4 flex items-center justify-between">
           <button onClick={() => navigate('/')}>
-            <Logo className="h-10" />
+            <Logo className="h-14" />
           </button>
           <span className="px-2.5 py-1 text-[11px] font-mono border border-dashed border-seaglass text-seaglass">
             공유된 일정 · 읽기 전용
