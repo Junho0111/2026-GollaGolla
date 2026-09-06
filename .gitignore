@@ -45,4 +45,4 @@ application-*.yml
 *.log
 
 ### QueryDSL Generated Files ###
-/src/main/generated/
+/src/main/generated/.idea/
