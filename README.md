@@ -59,6 +59,47 @@
 <br>
 <br>
 
+## 📚 API 명세서
+
+프로젝트의 상세 API 스펙은 **Postman 웹 문서**와 **Markdown 문서** 두 가지 형태로 제공됩니다.
+
+<p>
+  <!-- Postman 웹 문서 링크 -->
+  <a href="https://junho0111-5745015.postman.co/workspace/5c2b8e28-78a3-4054-85d7-8e75e876bea8/documentation/49958030-c3cffd5e-7224-467c-83ce-3baf8c381d05" target="_blank">
+    <img src="https://img.shields.io/badge/Postman_API_Docs-FF6C37?style=for-the-badge&logo=postman&logoColor=white"/>
+  </a>
+  
+  <!-- Markdown 문서 링크 -->
+  <a href="./docs/GollaGolla_API_명세서.md">
+    <img src="https://img.shields.io/badge/Markdown_API_Docs-000000?style=for-the-badge&logo=markdown&logoColor=white"/>
+  </a>
+</p>
+
+<br>
+<br>
+
+## 🗂️ ERD (Entity Relationship Diagram)
+<p>
+  <!-- 클릭 시 원본 이미지 페이지로 이동하는 뱃지 -->
+  <a href="./docs/images/GollaGolla_ERD.png" target="_blank">
+    <img src="https://img.shields.io/badge/View_Full_ERD-24292e?style=for-the-badge&logo=github&logoColor=white"/>
+  </a>
+</p>
+
+<details>
+  <summary><b>🔍 ERD 미리보기 펼치기 (클릭)</b></summary>
+  <div align="center">
+    <br>
+    <a href="./docs/images/GollaGolla_ERD.png" target="_blank">
+      <img src="./docs/images/GollaGolla_ERD.png" alt="GollaGolla ERD" width="90%">
+    </a>
+    <p><em>(이미지를 클릭하면 원본 크기로 볼 수 있습니다)</em></p>
+  </div>
+</details>
+
+<br>
+<br>
+
 ## ⚡️ 백엔드 기술 스택
 
 ### ☕️ 개발 환경 & Build
