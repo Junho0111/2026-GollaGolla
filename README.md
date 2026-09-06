@@ -1,5 +1,5 @@
 <div align=center>
-  <img width="200" alt="골라골라 로고" src="./docs//images/logo.png">
+  <img width="200" alt="골라골라 로고" src="./docs/images/logo.png">
   <h2> 🧳 LLM 기반 맞춤형 여행 일정 생성, 골라골라! </h2>
   <br>
   <strong>골라골라(GollaGolla)</strong>는 사용자의 취향을 담은 장소를 기반으로
