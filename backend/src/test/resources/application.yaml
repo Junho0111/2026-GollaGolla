@@ -36,7 +36,7 @@ jwt:
   refresh-token-expiry-ms: 604800000   # 7일
 
 app:
-  share-base-url: http://localhost/s/
+  share-base-url: http://localhost/share/
 
 oauth:
   google:

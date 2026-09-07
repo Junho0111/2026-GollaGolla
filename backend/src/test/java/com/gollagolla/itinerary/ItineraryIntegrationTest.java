@@ -267,7 +267,7 @@ class ItineraryIntegrationTest {
                         .header("Authorization", ownerToken))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.shareToken", notNullValue()))
-                .andExpect(jsonPath("$.url", containsString("/s/")))
+                .andExpect(jsonPath("$.url", containsString("/share/")))
                 .andReturn();
 
         String token = objectMapper.readTree(shareRes.getResponse().getContentAsString()).get("shareToken").asText();

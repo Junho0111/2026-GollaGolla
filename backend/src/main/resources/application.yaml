@@ -30,7 +30,7 @@ jwt:
   refresh-token-expiry-ms: 604800000   # 7일
 
 app:
-  share-base-url: https://gollagolla.app/s/
+  share-base-url: ${SHARE_BASE_URL:https://gollagolla.app/share/}
 
 oauth:
   kakao:
