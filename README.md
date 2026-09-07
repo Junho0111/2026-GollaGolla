@@ -100,6 +100,20 @@
 <br>
 <br>
 
+## 🛠️ 문제해결 일지
+
+문제 해결 기록 문서입니다.
+
+<p>
+  <!-- 문제해결 일지 Markdown 문서 이동 뱃지 -->
+  <a href="./docs/문제해결_일지.md">
+    <img src="https://img.shields.io/badge/문제해결_일지-D14836?style=for-the-badge&logo=gitbook&logoColor=white"/>
+  </a>
+</p>
+
+<br>
+<br>
+
 ## ⚡️ 백엔드 기술 스택
 
 ### ☕️ 개발 환경 & Build
